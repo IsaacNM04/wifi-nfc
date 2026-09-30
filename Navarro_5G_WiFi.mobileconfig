@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>AutoJoin</key>
+            <true/>
+            <key>EncryptionType</key>
+            <string>WPA2</string>
+            <key>HIDDEN_NETWORK</key>
+            <false/>
+            <key>Password</key>
+            <string>Roberto0802</string>
+            <key>SSID_STR</key>
+            <string>Navarro 5G</string>
+            <key>PayloadDisplayName</key>
+            <string>Navarro 5G</string>
+            <key>PayloadIdentifier</key>
+            <string>com.navarro.wifi.B2469A5B-B4C7-4B37-92A9-D7399D90DA24</string>
+            <key>PayloadType</key>
+            <string>com.apple.wifi.managed</string>
+            <key>PayloadUUID</key>
+            <string>B2469A5B-B4C7-4B37-92A9-D7399D90DA24</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>Wi-Fi Navarro 5G</string>
+    <key>PayloadIdentifier</key>
+    <string>com.navarro.wifi.profile.DF5DFBBF-596D-4D64-AB45-C40AF728F917</string>
+    <key>PayloadOrganization</key>
+    <string>Navarro</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>DF5DFBBF-596D-4D64-AB45-C40AF728F917</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
