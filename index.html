@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conectar al Wi-Fi</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+      background: #f5f5f5;
+    }
+
+    .box {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+    }
+
+    a {
+      display: block;
+      margin-top: 20px;
+      padding: 15px;
+      background: #007aff;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>📶 Conectarse al Wi-Fi</h1>
+
+    <p id="mensaje">Detectando dispositivo...</p>
+
+    <div id="iphone" style="display:none;">
+      <p>Estás usando iPhone.</p>
+      <a href="Navarro_5G_WiFi.mobileconfig">
+        Conectar al Wi-Fi
+      </a>
+    </div>
+
+    <div id="android" style="display:none;">
+      <p>Estás usando Android.</p>
+      <p>Seleccioná la red Wi-Fi y conectate con la información proporcionada.</p>
+      <strong>Navarro 5G</strong>
+    </div>
+
+  </div>
+
+<script>
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
+    document.getElementById("mensaje").style.display = "none";
+    document.getElementById("iphone").style.display = "block";
+  } else if (ua.includes("android")) {
+    document.getElementById("mensaje").style.display = "none";
+    document.getElementById("android").style.display = "block";
+  } else {
+    document.getElementById("mensaje").textContent =
+      "Dispositivo no reconocido.";
+  }
+</script>
+
+</body>
+</html>
