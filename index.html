@@ -1,84 +1,533 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conectar al Wi-Fi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px 20px;
-      background: #f5f5f5;
-    }
+    <title>Conectar al Wi-Fi</title>
 
-    .box {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    h1 {
-      margin-bottom: 10px;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f4f7;
+            color: #222;
+        }
 
-    p {
-      color: #666;
-    }
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: white;
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
 
-    a {
-      display: block;
-      margin-top: 20px;
-      padding: 15px;
-      background: #007aff;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 18px;
-    }
-  </style>
+        .wifi-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 5px 0 10px;
+            font-size: 28px;
+        }
+
+        .network {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .primary {
+            background: #007aff;
+            color: white;
+        }
+
+        .secondary {
+            background: #eeeeee;
+            color: #222;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #androidFallback {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        #qrContainer {
+            margin-top: 20px;
+        }
+
+        #qr {
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .small {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="container">
 
-    <h1>📶 Conectarse al Wi-Fi</h1>
+    <div class="wifi-icon">📶</div>
 
-    <p id="mensaje">Detectando dispositivo...</p>
+    <h1>Conectar al Wi-Fi</h1>
 
-    <div id="iphone" style="display:none;">
-      <p>Estás usando iPhone.</p>
-      <a href="Navarro_5G_WiFi.mobileconfig">
-        Conectar al Wi-Fi
-      </a>
+    <div class="network">
+        Navarro 5G
     </div>
 
-    <div id="android" style="display:none;">
-      <p>Estás usando Android.</p>
-      <p>Seleccioná la red Wi-Fi y conectate con la información proporcionada.</p>
-      <strong>Navarro 5G</strong>
+    <p class="description">
+        Pulsa el botón para conectar tu dispositivo a nuestra red Wi-Fi.
+    </p>
+
+    <!-- ========================= -->
+    <!-- IPHONE -->
+    <!-- ========================= -->
+
+    <div id="iphoneSection" class="hidden">
+
+        <a
+            class="button primary"
+            href="Navarro_5G_WiFi.mobileconfig">
+            Conectar al Wi-Fi
+        </a>
+
+        <p class="small">
+            Se abrirá el perfil de configuración de iPhone.
+            Después de descargarlo, ve a Ajustes → Perfil descargado
+            para instalarlo.
+        </p>
+
     </div>
 
-  </div>
+
+    <!-- ========================= -->
+    <!-- ANDROID -->
+    <!-- ========================= -->
+
+    <div id="androidSection" class="hidden">
+
+        <button
+            id="androidConnect"
+            class="button primary">
+            Conectar al Wi-Fi
+        </button>
+
+        <div id="androidFallback" class="hidden">
+
+            <p>
+                Tu navegador no pudo iniciar directamente
+                la conexión Wi-Fi.
+            </p>
+
+            <!-- Abrir configuración Wi-Fi -->
+            <button
+                id="wifiSettings"
+                class="button secondary">
+                Abrir configuración Wi-Fi
+            </button>
+
+            <button
+                id="showQR"
+                class="button secondary">
+                Mostrar código QR
+            </button>
+
+            <div id="qrContainer" class="hidden">
+
+                <div id="qr"></div>
+
+                <p class="small">
+                    Escanea este código con la cámara
+                    o con el lector de códigos QR de tu teléfono.
+                    Android mostrará la opción para conectarse
+                    a la red.
+                </p>
+
+            </div>
+
+        </div>
+
+        <p id="androidStatus" class="status"></p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- OTROS DISPOSITIVOS -->
+    <!-- ========================= -->
+
+    <div id="otherSection" class="hidden">
+
+        <p>
+            Tu dispositivo no fue identificado como
+            iPhone o Android.
+        </p>
+
+        <button
+            id="showQROther"
+            class="button primary">
+            Mostrar código QR
+        </button>
+
+        <div id="qrOther" class="hidden"></div>
+
+    </div>
+
+</div>
+
+
+<!--
+    Librería QR.
+    Se utiliza únicamente como respaldo.
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 
 <script>
-  const ua = navigator.userAgent.toLowerCase();
 
-  if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) {
-    document.getElementById("mensaje").style.display = "none";
-    document.getElementById("iphone").style.display = "block";
-  } else if (ua.includes("android")) {
-    document.getElementById("mensaje").style.display = "none";
-    document.getElementById("android").style.display = "block";
-  } else {
-    document.getElementById("mensaje").textContent =
-      "Dispositivo no reconocido.";
-  }
+    /* ==========================================
+       DATOS DE LA RED
+       ========================================== */
+
+    const SSID = "Navarro 5G";
+    const PASSWORD = "roberto0802";
+
+    /*
+     * Formato Wi-Fi QR.
+     *
+     * WPA funciona para redes WPA/WPA2.
+     */
+    const WIFI_STRING =
+        "WIFI:T:WPA;S:" +
+        escapeWifiValue(SSID) +
+        ";P:" +
+        escapeWifiValue(PASSWORD) +
+        ";;";
+
+
+    /* ==========================================
+       ESCAPAR DATOS PARA WIFI QR
+       ========================================== */
+
+    function escapeWifiValue(value) {
+
+        return value
+            .replace(/\\/g, "\\\\")
+            .replace(/;/g, "\\;")
+            .replace(/,/g, "\\,")
+            .replace(/:/g, "\\:")
+            .replace(/"/g, '\\"');
+    }
+
+
+    /* ==========================================
+       DETECTAR DISPOSITIVO
+       ========================================== */
+
+    const userAgent =
+        navigator.userAgent ||
+        navigator.vendor ||
+        window.opera;
+
+    const isAndroid =
+        /Android/i.test(userAgent);
+
+    const isIPhone =
+        /iPhone/i.test(userAgent);
+
+    const isIPad =
+        /iPad/i.test(userAgent) ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        );
+
+    const isIOS =
+        isIPhone || isIPad;
+
+
+    /* ==========================================
+       MOSTRAR LA SECCIÓN CORRESPONDIENTE
+       ========================================== */
+
+    if (isIOS) {
+
+        document
+            .getElementById("iphoneSection")
+            .classList.remove("hidden");
+
+    }
+    else if (isAndroid) {
+
+        document
+            .getElementById("androidSection")
+            .classList.remove("hidden");
+
+    }
+    else {
+
+        document
+            .getElementById("otherSection")
+            .classList.remove("hidden");
+
+    }
+
+
+    /* ==========================================
+       ANDROID
+       ========================================== */
+
+    const androidConnect =
+        document.getElementById("androidConnect");
+
+    if (androidConnect) {
+
+        androidConnect.addEventListener("click", function () {
+
+            const status =
+                document.getElementById("androidStatus");
+
+            const fallback =
+                document.getElementById("androidFallback");
+
+
+            /*
+             * PRIMER INTENTO
+             *
+             * Intentamos utilizar el esquema WIFI:
+             *
+             * WIFI:T:WPA;S:Navarro 5G;P:roberto0802;;
+             *
+             * Algunos navegadores/fabricantes pueden
+             * reconocerlo. No es una garantía de Android.
+             */
+
+            status.textContent =
+                "Intentando iniciar la conexión Wi-Fi...";
+
+
+            let externalOpened = false;
+
+            function pageHidden() {
+                externalOpened = true;
+            }
+
+            document.addEventListener(
+                "visibilitychange",
+                pageHidden,
+                { once: true }
+            );
+
+
+            const wifiLink =
+                document.createElement("a");
+
+            wifiLink.href = WIFI_STRING;
+
+            wifiLink.style.display = "none";
+
+            document.body.appendChild(wifiLink);
+
+            wifiLink.click();
+
+
+            /*
+             * Si el navegador no reconoce WIFI:
+             * mostramos los métodos de respaldo.
+             */
+
+            setTimeout(function () {
+
+                document.removeEventListener(
+                    "visibilitychange",
+                    pageHidden
+                );
+
+                wifiLink.remove();
+
+                if (!externalOpened) {
+
+                    status.textContent =
+                        "El navegador no pudo iniciar directamente la conexión.";
+
+                    fallback.classList.remove("hidden");
+                }
+
+            }, 1000);
+
+        });
+
+    }
+
+
+    /* ==========================================
+       ABRIR CONFIGURACIÓN WIFI DE ANDROID
+       ========================================== */
+
+    const wifiSettings =
+        document.getElementById("wifiSettings");
+
+    if (wifiSettings) {
+
+        wifiSettings.addEventListener("click", function () {
+
+            /*
+             * Intent URI de Android.
+             *
+             * Abre:
+             * android.settings.WIFI_SETTINGS
+             *
+             * No inserta las credenciales.
+             * Su función es llevar al usuario
+             * directamente a la configuración Wi-Fi.
+             */
+
+            window.location.href =
+                "intent:#Intent;" +
+                "action=android.settings.WIFI_SETTINGS;" +
+                "end";
+
+        });
+
+    }
+
+
+    /* ==========================================
+       GENERAR QR PARA ANDROID
+       ========================================== */
+
+    function generateQR(elementId) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (!element) {
+            return;
+        }
+
+        element.innerHTML = "";
+
+        new QRCode(element, {
+            text: WIFI_STRING,
+            width: 220,
+            height: 220,
+            correctLevel: QRCode.CorrectLevel.M
+        });
+
+    }
+
+
+    /* ==========================================
+       BOTÓN MOSTRAR QR
+       ========================================== */
+
+    const showQR =
+        document.getElementById("showQR");
+
+    if (showQR) {
+
+        showQR.addEventListener("click", function () {
+
+            const container =
+                document.getElementById("qrContainer");
+
+            container.classList.remove("hidden");
+
+            generateQR("qr");
+
+            showQR.textContent =
+                "Código QR mostrado";
+
+            showQR.disabled = true;
+
+        });
+
+    }
+
+
+    /* ==========================================
+       QR PARA OTROS DISPOSITIVOS
+       ========================================== */
+
+    const showQROther =
+        document.getElementById("showQROther");
+
+    if (showQROther) {
+
+        showQROther.addEventListener("click", function () {
+
+            const qrOther =
+                document.getElementById("qrOther");
+
+            qrOther.classList.remove("hidden");
+
+            qrOther.innerHTML = "";
+
+            new QRCode(qrOther, {
+                text: WIFI_STRING,
+                width: 220,
+                height: 220,
+                correctLevel: QRCode.CorrectLevel.M
+            });
+
+            showQROther.textContent =
+                "Código QR mostrado";
+
+            showQROther.disabled = true;
+
+        });
+
+    }
+
 </script>
 
 </body>
